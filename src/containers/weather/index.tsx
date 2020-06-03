@@ -1,66 +1,77 @@
-import React, {useState, useEffect} from "react";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import React, { useState, useEffect } from 'react';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { Container, Grid } from '@material-ui/core';
 
-import Layout from "../layout";
-import WeatherSearch from "../../components/search";
-import {icons, recommendations} from "../../constants";
-import {getWeather, getForecast} from '../../api';
+import WeatherSearch from '../../components/search';
+import WeatherInfo from '../../components/weatherInfo/weatherInfo';
+import { icons } from '../../constants';
+import { getWeather, getForecast } from '../../api';
+
+import { WeatherFormated, ForecastItem } from '../../types';
 
 const WeatherContainer: React.FC = () => {
-  const [city, setCity] = useState("Ho Chi Minh");
+  const [city, setCity] = useState('Ho Chi Minh');
   const [error, setError] = useState(null);
-  const [currentWeather, setCurrentWeather] = useState({} as any);
-  const [forecast, setForecast] = useState([] as any);
+  const [currentWeather, setCurrentWeather] = useState({} as WeatherFormated);
+  const [forecast, setForecast] = useState([] as ForecastItem[]);
+  const [loadingWeather, setLoadingWeather] = useState(false);
 
   useEffect(() => {
+    setLoadingWeather(true);
     getWeather(city)
-      .then((weather: any) => {
+      .then((weather: WeatherFormated) => {
         setCurrentWeather(weather);
         setError(null);
+        setLoadingWeather(false);
       })
-      .catch(err => {
+      .catch((err) => {
         setError(err.message);
+        setLoadingWeather(false);
       });
   }, [city, error]);
 
   useEffect(() => {
     getForecast(city)
-      .then((data: any) => {
+      .then((data: ForecastItem[]) => {
         setForecast(data);
         setError(null);
       })
-      .catch(err => {
+      .catch((err) => {
         setError(err.message);
       });
   }, [city, error]);
 
-  const handleCityChange = (city: any) => {
-    setCity(city);
+  const handleCityChange = (value: string) => {
+    setCity(value);
   };
 
-  
   if (
     (currentWeather && Object.keys(currentWeather).length) ||
     (forecast && Object.keys(forecast).length)
   ) {
-    const prefix = "wi wi-";
+    const prefix = 'wi wi-';
     const icon = prefix + icons[currentWeather.icon_id].icon;
-    const recommendation = recommendations[currentWeather.icon_id].recommendation;
 
     return (
-      <div>
-        <WeatherSearch city={city} onCityChange={handleCityChange} error={error} />
-        <Layout currentWeather={currentWeather} forecast={forecast} icon={icon} recommendation={recommendation} />
-      </div>
-    );
-  } else {
-    return (
-      <div>
-        <CircularProgress color={error ? "secondary" : "primary"} />
-        {error ? <p>{error}</p> : ""}
-      </div>
+      <Container maxWidth="md">
+        <Grid container spacing={2} alignContent="center" justify="center">
+          <WeatherSearch onCityChange={handleCityChange} error={error} />
+          <WeatherInfo
+            currentWeather={currentWeather}
+            forecast={forecast}
+            icon={icon}
+            loadingWeather={loadingWeather}
+          />
+        </Grid>
+      </Container>
     );
   }
-}
+  return (
+    <div>
+      <CircularProgress color={error ? 'secondary' : 'primary'} />
+      {error ? <p>{error}</p> : ''}
+    </div>
+  );
+};
 
-export default WeatherContainer; 
+export default WeatherContainer;

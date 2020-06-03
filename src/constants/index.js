@@ -1,7 +1,6 @@
+// eslint-disable-next-line
 import icons from './icons';
-import recommendations from './recommendations';
 
 export {
-    icons,
-    recommendations
-}
+  icons
+};

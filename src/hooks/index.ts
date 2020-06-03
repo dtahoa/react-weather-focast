@@ -1,8 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 
-// Our hook
-export default function useDebounce(value: any, delay: any) {
-  // State and setters for debounced value
+export default function useDebounce(value: string, delay: number) {
   const [debouncedValue, setDebouncedValue] = useState(value);
 
   useEffect(
