@@ -9,7 +9,10 @@ jest.mock('../../hooks', () => {
 
 
 describe('<WeatherSearch />', () => {
-  let testProps = {} as any;
+  let testProps: {
+    error: boolean | null | undefined;
+    city?: string; onCityChange?: () => void;
+  };
   beforeEach(() => {
     testProps = {
       city: 'Eldoret',

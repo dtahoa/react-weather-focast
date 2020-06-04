@@ -1,8 +1,8 @@
 import React from 'react';
+import moment from 'moment';
 import { makeStyles } from '@material-ui/core/styles';
 
 import { containerFluid } from '../../assets/styles';
-import moment from 'moment';
 
 const useStyles = makeStyles({
   container: { ...containerFluid },

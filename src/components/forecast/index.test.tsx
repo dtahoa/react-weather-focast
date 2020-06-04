@@ -4,8 +4,10 @@ import '@testing-library/jest-dom/extend-expect';
 import Forecast from './index';
 import { mockForecast } from '../../__mocks__/Weather.mock';
 
+import { ForecastItem } from '../../types';
+
 describe('<Forecast />', () => {
-  let testProps = [] as any;
+  let testProps: { forecast: ForecastItem[] };
 
   beforeEach(() => {
     testProps = {

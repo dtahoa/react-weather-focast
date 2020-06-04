@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { AppBar, Toolbar } from '@material-ui/core';
 
 import { containerFluid } from '../../assets/styles';
-import Logo from '../../cloud.svg';
+import Logo from '../../assets/images/cloud.svg';
 
 const styles = makeStyles({
   appBar: {

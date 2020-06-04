@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 import './index.css';
-import AppLayout from './layouts/App';
-import NotFound from './components/notfound';
+import AppLayout from './layouts/app';
+import PageNotFound from './components/notfound';
 
 import * as serviceWorker from './serviceWorker';
 
@@ -13,7 +13,7 @@ ReactDOM.render(
     <BrowserRouter>
       <Switch>
         <Route exact path="/" component={AppLayout} />
-        <Route component={NotFound} />
+        <Route component={PageNotFound} />
       </Switch>
     </BrowserRouter>
   </React.StrictMode>,
